@@ -4,11 +4,12 @@ var rename = require("gulp-rename");
 var browserify = require("browserify");
 var fs = require("fs");
 
-gulp.task("default", function () {
+gulp.task("babel", function (cb) {
   return gulp.src("app.js")
     .pipe(babel())
     .pipe(rename('main.js'))
     .pipe(gulp.dest("./"));
+    cb(err);
 });
 
 gulp.task('browserify', function() {
@@ -19,3 +20,5 @@ gulp.task('browserify', function() {
     .bundle()
     .pipe(fs.createWriteStream("./dist/main.js"));
 })
+
+gulp.task('default', ['babel', 'browserify'])
