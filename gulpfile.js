@@ -2,7 +2,7 @@ var gulp = require("gulp");
 var babel = require("gulp-babel");
 var rename = require("gulp-rename");
 var browserify = require("browserify");
-var fs = require("fs");
+var source = require('vinyl-source-stream')
 
 gulp.task("babel", function (cb) {
   return gulp.src("app.js")
@@ -18,7 +18,8 @@ gulp.task('browserify', function() {
     debug: true
   })
     .bundle()
-    .pipe(fs.createWriteStream("./dist/main.js"));
+    .pipe(source('main.js'))
+    .pipe(gulp.dest('dist'));
 })
 
 gulp.task('default', ['babel', 'browserify'])
